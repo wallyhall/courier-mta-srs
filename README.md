@@ -41,7 +41,7 @@ EMAIL="$(</dev/stdin)"
 echo "$EMAIL" | /usr/sbin/sendmail -f "$SRS_RETURN" "$1"
 
 $ sudo cat /etc/courier/aliases/system
-srs-test: | /usr/local/bin/srs-forwarder someexternaladdress@example.com
+srs-test: | /usr/local/bin/srs-forwarder someexternaladdress@example.com  ## Example SRS forwarded alias
 ```
 
 Note that sos-forwarder is executable by Courier, and that `$SENDER` and `$HOST` are environment variables set by Courier when performing pipe-to-command aliases.  We're relying on Courier's implementation of sendmail for this, which is being used to rewrite the necessary SRS related headers (Return Path I believe).
@@ -49,6 +49,19 @@ Note that sos-forwarder is executable by Courier, and that `$SENDER` and `$HOST`
 Modified Courier alias entries can now re-queue and forward externally bound aliases successfully!
 
 For a very lightly used mail server, the above is sufficient.  For anyone running a mail server with higher throughput, various improvements can be made which are included in this Github project.
+
+## What about bounced/failed delivery notices?
+In theory, I believe, a bounce message for a SRS forwarded email should be sent back to the kludged email address (that is, a fake email address belonging to your domain).
+
+We can either capture these ourselves (i.e. forward them to `postmaster`) or pass them back to the true origin inserting a "default" handler in Courier's `aliasdir`:
+
+```
+$ cat /etc/courier/aliasdir/.courier-srsbounce-default
+postmaster  ## to keep them ourselves ... OR:
+| /usr/local/bin/srs-reverser  ## to forward the bounce back to the true origin
+```
+
+In this situation you would need to add a `srsbounce` prefix to the `srs-forwarder` script - see the `srs-forwarder` script for further details.  (It's a minor change.)
 
 ## Not yet implemented
 In theory calling `srsd` (i.e. via the supplied `srsc` client) is significantly faster for higher-throughput mail servers.
