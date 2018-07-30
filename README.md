@@ -26,6 +26,10 @@ Sadly it seems pretty well nothing natively supports SRS except Postfix (which e
 We've successfully patched around this by artificially gluing Debian's `srs` utility with Courier:
 
 ```
+$ sudo dd if=/dev/urandom bs=1 count=32 2>/dev/null | base64 -w 0 > /etc/courier/srssecret
+$ sudo chown root:mail /etc/courier/srssecret
+$ sudo chmod 640 /etc/courier/srssecret
+
 $ sudo apt-get install srs
 
 $ cat /usr/local/bin/srs-forwarder 
