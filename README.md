@@ -42,4 +42,4 @@ Note that sos-forwarder is executable by Courier, and that `$SENDER` and `$HOST`
 
 Modified Courier alias entries can now re-queue and forward externally bound aliases successfully!
 
-For a very lightly used mail server, the above is sufficient.  For anyone running a mail server with higher throughput, various improvements can be made which I'll describe over at Github.
+For a very lightly used mail server, the above is sufficient.  For anyone running a mail server with higher throughput, various improvements can be made which are included in this Github project.
