@@ -2,7 +2,7 @@
 A very simple and minimalist glue for Courier-MTA and SRS
 
 ## What is this?
-This is the Github half of a [blog posting|http://matt.matzi.org.uk/2018/07/30/forwarding-external-mail-to-external-addresses-spf-srs-dkim-and-courier-mta/] over at matt.matzi.org.uk
+This is the Github half of a [blog posting](http://matt.matzi.org.uk/2018/07/30/forwarding-external-mail-to-external-addresses-spf-srs-dkim-and-courier-mta/) over at matt.matzi.org.uk
 
 ### In brief:
 Anyone who knows me knows how utterly frustrating I find the state of email today.
