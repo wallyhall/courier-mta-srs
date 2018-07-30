@@ -1,5 +1,10 @@
 #!/bin/sh
 
+## To capture and handle SRS bounce/failed delivery notice emails elegantly,
+## set a prefix (e.g. "srsbounce-") and an appropriate Courier alias.
+## See the .courier-srsbounce-default for an example.
+SRS_BOUNCE_PREFIX=""
+
 if [ -z $SENDER ]; then
    echo "No \$SENDER env var set"
    exit 70
@@ -22,7 +27,7 @@ if [ $? -ne 0 ]; then
 fi
 
 EMAIL="$(</dev/stdin)"
-echo "$EMAIL" | /usr/sbin/sendmail -f "$SRS_RETURN" "$1"
+echo "$EMAIL" | /usr/sbin/sendmail -f "$SRS_BOUNCE_PREFIX$SRS_RETURN" "$1"
 if [ $? -ne 0 ]; then
    echo "Failed to requeue email for SRS forwarding"
    exit 70
