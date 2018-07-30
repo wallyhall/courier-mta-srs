@@ -1,0 +1,7 @@
+## This should be located in /etc/courier/aliasdir/.courier-srsbounce-default
+## It provides a catch-all handler for bounced messages.
+## Courier's documentation explains why this "-default" works (see section "Default delivery instructions"):
+##   http://www.courier-mta.org/dot-courier.html
+
+## postmaster   ## switch to this for local handling
+| /usr/local/bin/srs-reverser   ## use this to pass the bounced message back to the true origin
