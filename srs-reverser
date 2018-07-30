@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if [ -z $EXT ]; then
+   echo "No \$EXT env var set"
+   exit 70
+fi
+
+SRS_RETURN_ENCODED="$(echo $EXT | cut -d'-' -f2-)"
+SRS_RETURN="$(/usr/bin/srs --secretfile /etc/courier/srssecret "$SRS_RETURN_ENCODED" --reverse)"
+if [ $? -ne 0 ]; then
+   echo "Failed to reverse SRS kludge address"
+   exit 70
+fi
+
+EMAIL="$(</dev/stdin)"
+echo "$EMAIL" | /usr/sbin/sendmail "$SRS_RETURN"
+if [ $? -ne 0 ]; then
+   echo "Failed to requeue email for SRS forwarding"
+   exit 70
+fi
+
+exit 0
