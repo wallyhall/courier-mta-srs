@@ -1,0 +1,31 @@
+#!/bin/sh
+
+if [ -z $SENDER ]; then
+   echo "No \$SENDER env var set"
+   exit 70
+fi
+
+if [ -z $HOST ]; then
+   echo "No \$HOST env var set"
+   exit 70
+fi
+
+if [ -z $1 ]; then
+   echo "No target email argument provided"
+   exit 70
+fi
+
+SRS_RETURN="$(/usr/bin/srs "$SENDER" --secretfile /etc/courier/srssecret --alias "$HOST")"
+if [ $? -ne 0 ]; then
+   echo "Failed to generate SRS kludge source address"
+   exit 70
+fi
+
+EMAIL="$(</dev/stdin)"
+echo "$EMAIL" | /usr/sbin/sendmail -f "$SRS_RETURN" "$1"
+if [ $? -ne 0 ]; then
+   echo "Failed to requeue email for SRS forwarding"
+   exit 70
+fi
+
+exit 0
