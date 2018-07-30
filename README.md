@@ -11,6 +11,8 @@ It's inherently insecure, absolutely relied upon, and there's always someone who
 
 For larger businesses the offerings by Microsoft and the alike (Office365 for example) make sense.  For me however - it's Courier-MTA on a Debian box.  So when things go wrong, the buck stops with me.
 
+(As an interesting aside: it seems even O365 is playing catch-up on this subject.  Writing this on the 30th July 2018: https://blogs.technet.microsoft.com/exchange/2018/06/15/sender-rewriting-scheme-srs-coming-to-office-365/ )
+
 The "Sender Policy Framework" was an attempt to make email more secure and less abusable.  I assume you're already familiar with it - and that you're reading this because you, like me, are having issues forwarding 3rd party emails to 3rd party aliases.
 
 Because the way Courier (and indeed most MTAs) handle aliases, an email address originating from external address user@gmail.com is received and then literally resent (fairly verbatim) to the external alias another@yahoo.co.uk.  When this happens, Yahoo observes the state of the email's SPF and correctly identifies that your forwarding mail server (plfc.org.uk in my case) is not an authorised sender for gmail.com.
