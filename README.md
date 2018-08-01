@@ -44,7 +44,7 @@ $ sudo cat /etc/courier/aliases/system
 srs-test: | /usr/local/bin/srs-forwarder someexternaladdress@example.com  ## Example SRS forwarded alias
 ```
 
-Note that sos-forwarder is executable by Courier, and that `$SENDER` and `$HOST` are environment variables set by Courier when performing pipe-to-command aliases.  We're relying on Courier's implementation of sendmail for this, which is being used to rewrite the necessary SRS related headers (Return Path I believe).
+Ensure that srs-forwarder is executable by Courier, and that `$SENDER` and `$HOST` are environment variables set by Courier when performing pipe-to-command aliases.  We're relying on Courier's implementation of sendmail for this, which is being used to rewrite the necessary SRS related headers (Return Path I believe).
 
 Modified Courier alias entries can now re-queue and forward externally bound aliases successfully!
 
